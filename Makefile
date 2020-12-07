@@ -10,7 +10,7 @@ all: ${BUILD_FILES}
 test: ${BUILD_FILES}
 	@echo SRC_FILES=${SRC_FILES}
 	@echo BUILD_FILES=${BUILD_FILES}
-	coffee test/index.coffee
+	coffee --nodejs --trace-warnings --nodejs --unhandled-rejections=strict test/index.coffee
 
 dist:
 	# Building $@:
