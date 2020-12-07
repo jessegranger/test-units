@@ -8,7 +8,9 @@ supportColor = forceColor or (TTY.isatty(1) and /(?:color|alacritty)/.test proce
 red   = if supportColor then (word) -> "\x1B[38;2;255;0;0m#{word}\x1B[m" else (word) -> word
 green = if supportColor then (word) -> "\x1B[38;2;0;255;0m#{word}\x1B[m" else (word) -> word
 print = (args...) -> process.stdout.write args.join(" ")
-die = (msg...) -> echo "Die:", msg...; process.exit 1
+die = (msg...) ->
+	console.error new Error("Die: "+msg.map($.toString).join(" "))
+	process.exit 1
 debounce = (timer, ms, func) ->
 	clearTimeout timer
 	return setTimeout func, ms
