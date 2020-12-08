@@ -36,16 +36,16 @@ runAllSuites = (runOpts) ->
 						progress = -> "[#{testStarted}/#{testPassed+testFailed}/#{testCount}] #{suite_key} - #{test_key}"
 						testStarted += 1
 						timer = null
-						fail = (err) ->
+						fail = (err, label) ->
 							testFailed += 1
-							runOpts.echo progress(), runOpts.failMark
-							pass = (->) # ignore any future passes
+							runOpts.echo progress(), runOpts.failMark, (label ? ""), (err ? "")
+							fail = pass = (->) # ignore any future passes
 							test_next if runOpts.exitOnFail then err else null
 							null
 						pass = ->
 							testPassed += 1
 							runOpts.echo progress(), runOpts.passMark
-							fail = (->) # ignore future failures
+							fail = pass = (->) # ignore future failures
 							test_next()
 							null
 						# get the test options from the tests Map
@@ -65,10 +65,10 @@ runAllSuites = (runOpts) ->
 								try suiteOpts.afterEachTest.call test_context, ->
 									if err and not testOpts.shouldFail then fail(err)
 									else pass()
-								catch err then fail(err)
+								catch err then fail(err, "try afterEachTest")
 								null
-							catch err then fail(err)
-						catch err then fail(err)
+							catch err then fail(err, "try testOpts.func")
+						catch err then fail(err, "try beforeEachTest")
 					(err) ->
 						try suiteOpts.suiteTeardown (err2) ->
 							suite_next(err ? err2)
