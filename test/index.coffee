@@ -4,6 +4,7 @@
 
 suite "suite()", ->
 	test "test (sync)", ->
+	test "test (sync) should fail", { shouldFail: true }, -> throw new Error('should fail')
 	test "test (callback)", (ok) -> ok()
 	test "test (async) returns a Promise", -> new Promise((resolve) -> setTimeout(resolve, 300))
 	test "test (async) rejects a Promise", { shouldFail: true }, -> new Promise((_, reject) -> setTimeout((-> reject(123)), 300))
