@@ -9,7 +9,7 @@ red   = if supportColor then (word) -> "\x1B[38;2;255;0;0m#{word}\x1B[m" else (w
 green = if supportColor then (word) -> "\x1B[38;2;0;255;0m#{word}\x1B[m" else (word) -> word
 print = (args...) -> process.stdout.write args.join(" ")
 die = (msg...) ->
-	console.error new Error("Die: "+msg.map($.toString).join(" "))
+	console.error new Error("Die: "+msg.map(String).join(" "))
 	process.exit 1
 debounce = (timer, ms, func) ->
 	clearTimeout timer

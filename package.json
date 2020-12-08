@@ -1,6 +1,6 @@
 {
   "name": "test-units",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Run unit tests",
   "main": "dist/index.js",
   "author": "jesse_granger@fastmail.com",
